@@ -77,13 +77,14 @@
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "@babel/core": "^7.26.0",
     "@babel/generator": "^7.26.0",
     "@babel/parser": "^7.26.0",
     "@babel/types": "^7.26.0",
-    "@rollup/pluginutils": "^5.1.0",
+    "@rollup/pluginutils": "^5.1.0"
+  },
+  "devDependencies": {
     "@types/babel__core": "^7.20.5",
     "@types/babel__generator": "^7.27.0",
     "@types/node": "^26.1.1",
