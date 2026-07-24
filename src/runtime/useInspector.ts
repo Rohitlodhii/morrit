@@ -6,9 +6,9 @@ export interface SourceInfo {
   column: number
 }
 
-const ATTRIBUTE_NAME = 'data-source-lens'
+const ATTRIBUTE_NAME = 'data-vilson'
 
-function findNearestSourceLens(el: HTMLElement | null): SourceInfo | null {
+function findNearestVilson(el: HTMLElement | null): SourceInfo | null {
   let current: HTMLElement | null = el
   while (current) {
     const value = current.getAttribute(ATTRIBUTE_NAME)
@@ -65,7 +65,7 @@ export function useInspector(): UseInspectorReturn {
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement
-      if (target.closest('[data-source-lens-inspector]')) return
+      if (target.closest('[data-vilson-inspector]')) return
       setHighlightedElement(target)
     }
 
@@ -75,7 +75,7 @@ export function useInspector(): UseInspectorReturn {
 
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement
-      if (target.closest('[data-source-lens-inspector]')) return
+      if (target.closest('[data-vilson-inspector]')) return
 
       if (sourceInfo) {
         hidePopup()
@@ -85,7 +85,7 @@ export function useInspector(): UseInspectorReturn {
       e.preventDefault()
       e.stopPropagation()
 
-      const info = findNearestSourceLens(target)
+      const info = findNearestVilson(target)
       if (!info) {
         return
       }
@@ -128,4 +128,4 @@ export function useInspector(): UseInspectorReturn {
   }
 }
 
-export { findNearestSourceLens, ATTRIBUTE_NAME }
+export { findNearestVilson, ATTRIBUTE_NAME }

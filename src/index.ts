@@ -1,2 +1,2 @@
-export { SourceLensInspector } from './runtime'
+export { VilsonInspector } from './runtime'
 export type { SourceInfo } from './runtime'

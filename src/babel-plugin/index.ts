@@ -10,13 +10,13 @@ interface BabelPluginOptions {
   filename?: string
 }
 
-export default function sourceLensBabelPlugin(
+export default function vilsonBabelPlugin(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   _api: any,
   options: BabelPluginOptions = {}
 ): PluginObj {
   const {
-    attributeName = 'data-source-lens',
+    attributeName = 'data-vilson',
     relativeTo = process.cwd(),
     exclude = ['Fragment', 'React.Fragment'],
     filename: optFilename,
@@ -25,7 +25,7 @@ export default function sourceLensBabelPlugin(
   const excludeSet = new Set(exclude)
 
   return {
-    name: 'react-source-lens',
+    name: 'vilson',
     visitor: {
       JSXOpeningElement(p, state) {
         const node = p.node

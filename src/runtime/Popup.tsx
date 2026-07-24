@@ -7,6 +7,8 @@ interface PopupProps {
   onClose: () => void
 }
 
+declare const __VILSON_ROOT__: string | undefined
+
 const POPUP_WIDTH = 300
 const POPUP_HEIGHT = 140
 const EMOJIS = ['😀', '😎', '🥰', '🫥', '🤑', '🥴', '🥸', '🤡', '💀']
@@ -85,10 +87,7 @@ const styles: Record<string, React.CSSProperties> = {
     color: '#1e1e2e',
     borderColor: '#89b4fa',
   },
-  openBtnDisabled: {
-    opacity: 0.6,
-    cursor: 'not-allowed',
-  },
+
   toast: {
     position: 'fixed',
     bottom: 80,
@@ -116,8 +115,6 @@ export function Popup({ info, position, onClose }: PopupProps) {
   const btnEmoji = useMemo(() => EMOJIS[Math.floor(Math.random() * EMOJIS.length)], [])
   const [copied, setCopied] = useState(false)
   const [copyError, setCopyError] = useState(false)
-  const [openingEditor, setOpeningEditor] = useState(false)
-  const [editorError, setEditorError] = useState(false)
 
   const adjustPosition = useCallback(() => {
     let x = position.x + 16
@@ -173,26 +170,11 @@ export function Popup({ info, position, onClose }: PopupProps) {
     }
   }, [info])
 
-  const openInEditor = useCallback(async () => {
-    setOpeningEditor(true)
-    setEditorError(false)
-
-    const fileParam = `${info.file}:${info.line}:${info.column}`
-    try {
-      const res = await fetch('/__open-in-editor', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ file: fileParam }),
-      })
-      const data = await res.json()
-      if (!data.success) throw new Error(data.error || 'Failed to open editor')
-    } catch (err) {
-      console.error('[SourceLens] Failed to open in editor:', err)
-      setEditorError(true)
-      setTimeout(() => setEditorError(false), 3000)
-    } finally {
-      setOpeningEditor(false)
-    }
+  const openInEditor = useCallback(() => {
+    const root = typeof __VILSON_ROOT__ === 'string' ? __VILSON_ROOT__ : ''
+    const filePath = `${root}/${info.file}`.replace(/\\/g, '/').replace(/\/+/g, '/')
+    const url = `vscode://file/${filePath}:${info.line}:${info.column}`
+    window.location.href = url
   }, [info])
 
   useEffect(() => {
@@ -212,14 +194,8 @@ export function Popup({ info, position, onClose }: PopupProps) {
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [onClose])
 
-  const showToast = copied || copyError || editorError
-  const toastMessage = copied
-    ? '✓ Copied!'
-    : copyError
-      ? '✗ Copy failed'
-      : editorError
-        ? '✗ Failed to open editor'
-        : ''
+  const showToast = copied || copyError
+  const toastMessage = copied ? '✓ Copied!' : '✗ Copy failed'
 
   const toastStyle = copied
     ? styles.toastSuccess
@@ -231,7 +207,7 @@ export function Popup({ info, position, onClose }: PopupProps) {
       <div
         style={{ ...styles.popup, left: coords.x, top: coords.y }}
         onClick={(e) => e.stopPropagation()}
-        data-source-lens-inspector
+        data-vilson-inspector
       >
         <div style={styles.header}>
           <span style={styles.filePath}>{info.file}:{info.line}</span>
@@ -255,12 +231,10 @@ export function Popup({ info, position, onClose }: PopupProps) {
             style={{
               ...styles.btn,
               ...styles.openBtn,
-              ...(openingEditor ? styles.openBtnDisabled : {}),
             }}
             onClick={openInEditor}
-            disabled={openingEditor}
           >
-            {openingEditor ? '⏳ Opening...' : `${btnEmoji} Open in VS Code`}
+            {`${btnEmoji} Open in VS Code`}
           </button>
         </div>
       </div>

@@ -2,26 +2,23 @@ import { createFilter, type FilterPattern } from '@rollup/pluginutils'
 import { parse } from '@babel/parser'
 import { transformFromAstSync } from '@babel/core'
 import path from 'path'
-import sourceLensBabelPlugin from '../babel-plugin'
-import { sourceLensMiddleware } from '../middleware'
-import type { SourceLensOptions } from '../types'
+import vilsonBabelPlugin from '../babel-plugin'
+import type { VilsonOptions } from '../types'
 
 interface VitePlugin {
   name: string
   enforce?: 'pre' | 'post'
   apply?: 'serve' | 'build' | ((this: void, config: unknown, env: { command: string; mode: string }) => boolean)
+  config?: () => { define: Record<string, string> }
   transform?: (code: string, id: string) => { code: string; map?: unknown } | null | undefined
-  configureServer?: (server: { middlewares: { use: (...args: unknown[]) => void } }) => void
 }
 
-interface VitePluginOptions extends Omit<SourceLensOptions, 'exclude'> {
+interface VitePluginOptions extends Omit<VilsonOptions, 'exclude'> {
   include?: FilterPattern
   exclude?: FilterPattern
-  editor?: string
-  openInEditorEndpoint?: string
 }
 
-function sourceLensVitePlugin(
+function vilsonVitePlugin(
   options: VitePluginOptions = {}
 ): VitePlugin {
   const {
@@ -29,17 +26,23 @@ function sourceLensVitePlugin(
     exclude,
     attributeName,
     rootDir,
-    editor,
-    openInEditorEndpoint,
   } = options
 
   const resolvedRootDir = rootDir || process.cwd()
   const filter = createFilter(include, exclude)
 
   return {
-    name: 'react-source-lens',
+    name: 'vilson',
     enforce: 'pre',
     apply: 'serve',
+
+    config() {
+      return {
+        define: {
+          __CARLOS_ROOT__: JSON.stringify(resolvedRootDir),
+        },
+      }
+    },
 
     transform(code, id) {
       if (!filter(id)) return null
@@ -57,7 +60,7 @@ function sourceLensVitePlugin(
         const result = transformFromAstSync(ast, code, {
           plugins: [
             [
-              sourceLensBabelPlugin,
+              vilsonBabelPlugin,
               {
                 attributeName,
                 relativeTo: resolvedRootDir,
@@ -82,17 +85,7 @@ function sourceLensVitePlugin(
         return null
       }
     },
-
-    configureServer(server) {
-      server.middlewares.use(
-        sourceLensMiddleware({
-          rootDir: resolvedRootDir,
-          editor,
-          endpoint: openInEditorEndpoint,
-        })
-      )
-    },
   }
 }
 
-export = sourceLensVitePlugin
+export = vilsonVitePlugin
