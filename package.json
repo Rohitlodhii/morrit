@@ -1,0 +1,76 @@
+{
+  "name": "react-source-lens",
+  "version": "0.1.0",
+  "description": "Compile-time React source inspector — click any UI element to open its source in your editor",
+  "exports": {
+    ".": {
+      "types": "./dist/runtime/index.d.ts",
+      "import": "./dist/runtime/index.js",
+      "require": "./dist/runtime/index.js"
+    },
+    "./babel-plugin": {
+      "types": "./dist/babel-plugin/index.d.ts",
+      "import": "./dist/babel-plugin/index.js",
+      "require": "./dist/babel-plugin/index.js"
+    },
+    "./vite-plugin": {
+      "types": "./dist/vite-plugin/index.d.ts",
+      "import": "./dist/vite-plugin/index.js",
+      "require": "./dist/vite-plugin/index.js"
+    },
+    "./webpack-plugin": {
+      "types": "./dist/webpack-plugin/index.d.ts",
+      "import": "./dist/webpack-plugin/index.js",
+      "require": "./dist/webpack-plugin/index.js"
+    },
+    "./middleware": {
+      "types": "./dist/middleware/index.d.ts",
+      "import": "./dist/middleware/index.js",
+      "require": "./dist/middleware/index.js"
+    }
+  },
+  "main": "dist/runtime/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "prepublishOnly": "npm run build",
+    "example": "cd examples/basic && npx vite --host",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "inspector",
+    "source",
+    "debug",
+    "developer-tools"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {
+    "launch-editor": "^2.10.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/generator": "^7.26.0",
+    "@babel/parser": "^7.26.0",
+    "@babel/types": "^7.26.0",
+    "@rollup/pluginutils": "^5.1.0",
+    "@types/babel__core": "^7.20.5",
+    "@types/babel__generator": "^7.27.0",
+    "@types/node": "^26.1.1",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "nodemon": "^3.1.14",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^7.0.2",
+    "vite": "^6.3.0",
+    "webpack": "^5.98.0"
+  }
+}
