@@ -1,10 +1,10 @@
-# termis
+# morrit
 
 Compile-time React source inspector for **Vite** and **Next.js**. Click any UI element in development to open its source file in VS Code — zero server setup.
 
 ## How it works
 
-termis injects a `data-termis` attribute into every JSX element at build time with the file path and line number. When inspector mode is active, clicking an element opens `vscode://file/<path>:<line>` directly in your browser — no API routes, no middleware, no Babel config.
+morrit injects a `data-morrit` attribute into every JSX element at build time with the file path and line number. When inspector mode is active, clicking an element opens `vscode://file/<path>:<line>` directly in your browser — no API routes, no middleware, no Babel config.
 
 ---
 
@@ -13,7 +13,7 @@ termis injects a `data-termis` attribute into every JSX element at build time wi
 ### 1. Install
 
 ```bash
-npm install termis
+npm install morrit
 ```
 
 ### 2. Add the plugin
@@ -22,17 +22,17 @@ npm install termis
 // vite.config.ts
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import termis from 'termis/vite-plugin'
+import morrit from 'morrit/vite-plugin'
 
 export default defineConfig({
   plugins: [
     react(),
-    termis({
+    morrit({
       rootDir: __dirname,
     }),
   ],
   optimizeDeps: {
-    include: ['termis'],
+    include: ['morrit'],
   },
 })
 ```
@@ -41,13 +41,13 @@ export default defineConfig({
 
 ```tsx
 // src/main.tsx or src/App.tsx
-import { TermisInspector } from 'termis'
+import { MorritInspector } from 'morrit'
 
 function App() {
   return (
     <>
       {/* your app */}
-      <TermisInspector />
+      <MorritInspector />
     </>
   )
 }
@@ -62,35 +62,35 @@ Toggle the inspector with **Ctrl+Shift+I**, then click any element to open its s
 ### 1. Install
 
 ```bash
-npm install termis
+npm install morrit
 ```
 
 ### 2. Wrap your Next.js config
 
 ```js
 // next.config.js
-const { withTermis } = require('termis/next')
+const { withMorrit } = require('morrit/next')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // your config
 }
 
-module.exports = withTermis(nextConfig)
+module.exports = withMorrit(nextConfig)
 ```
 
 ### 3. Add the inspector to your layout
 
 ```tsx
 // app/layout.tsx
-import { TermisInspector } from 'termis/next/client'
+import { MorritInspector } from 'morrit/next/client'
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
         {children}
-        <TermisInspector />
+        <MorritInspector />
       </body>
     </html>
   )
@@ -116,11 +116,11 @@ The floating button shows a random emoji and is only rendered in development mod
 ## Webpack (non-Next.js)
 
 ```js
-const { TermisWebpackPlugin } = require('termis/webpack-plugin')
+const { MorritWebpackPlugin } = require('morrit/webpack-plugin')
 
 module.exports = {
   plugins: [
-    new TermisWebpackPlugin({
+    new MorritWebpackPlugin({
       rootDir: __dirname,
     }),
   ],
@@ -135,8 +135,8 @@ module.exports = {
 // babel.config.js
 module.exports = {
   plugins: [
-    ['termis/babel-plugin', {
-      attributeName: 'data-termis',
+    ['morrit/babel-plugin', {
+      attributeName: 'data-morrit',
       relativeTo: __dirname,
     }],
   ],
@@ -151,13 +151,13 @@ All plugins accept these options:
 
 | Option | Type | Default | Description |
 |---|---|---|---|
-| `attributeName` | `string` | `'data-termis'` | HTML attribute name for source metadata |
+| `attributeName` | `string` | `'data-morrit'` | HTML attribute name for source metadata |
 | `rootDir` | `string` | `process.cwd()` | Project root for computing relative paths |
 | `exclude` | `string[]` | `['Fragment', 'React.Fragment']` | Tag names to skip |
 
 ---
 
-## Why termis?
+## Why morrit?
 
 - **No server middleware** — uses `vscode://file/` protocol directly from the browser
 - **No Babel config** in Next.js — works as a webpack loader, preserves SWC

@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "morrit",
   "version": "1.0.0",
   "description": "Compile-time React source inspector for Vite and Next.js",
   "type": "commonjs",
@@ -8,11 +8,11 @@
   "types": "dist/runtime/index.d.ts",
     "repository": {
     "type": "git",
-    "url": "https://github.com/rohitlodhii/termis.git"
+    "url": "https://github.com/rohitlodhii/morrit.git"
   },
-   "homepage": "https://github.com/rohitlodhii/termis#readme",
+   "homepage": "https://github.com/rohitlodhii/morrit#readme",
   "bugs": {
-    "url": "https://github.com/rohitlodhii/termis/issues"
+    "url": "https://github.com/rohitlodhii/morrit/issues"
   },
   "files": [
     "dist",
