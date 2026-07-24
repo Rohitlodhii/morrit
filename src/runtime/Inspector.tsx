@@ -54,7 +54,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
 }
 
-export function VilsonInspector() {
+export function MorritInspector() {
   const toggleEmoji = useMemo(() => {
     const emojis = ['😀', '😎', '🥰', '🫥', '🤑', '🥴', '🥸', '🤡', '💀']
     return emojis[Math.floor(Math.random() * emojis.length)]
@@ -82,14 +82,14 @@ export function VilsonInspector() {
 
     const handleMouseMove = (e: MouseEvent) => {
       const target = e.target as HTMLElement
-      if (target.closest('[data-vilson-inspector]')) {
+      if (target.closest('[data-morrit-inspector]')) {
         setTooltip(null)
         return
       }
 
-      const lens = target.closest('[data-vilson]') as HTMLElement | null
+      const lens = target.closest('[data-morrit]') as HTMLElement | null
       if (lens) {
-        const val = lens.getAttribute('data-vilson') || ''
+        const val = lens.getAttribute('data-morrit') || ''
         const parts = val.split(':')
         const display = parts.length >= 3
           ? parts.slice(0, -2).join(':') + ':' + parts[parts.length - 2]
@@ -103,7 +103,7 @@ export function VilsonInspector() {
         lens.style.outlineOffset = '2px'
       } else {
         setTooltip(null)
-        document.querySelectorAll('[data-vilson]').forEach((el) => {
+        document.querySelectorAll('[data-morrit]').forEach((el) => {
           ;(el as HTMLElement).style.outline = ''
           ;(el as HTMLElement).style.outlineOffset = ''
         })
@@ -113,7 +113,7 @@ export function VilsonInspector() {
     document.addEventListener('mousemove', handleMouseMove)
     return () => {
       document.removeEventListener('mousemove', handleMouseMove)
-      document.querySelectorAll('[data-vilson]').forEach((el) => {
+      document.querySelectorAll('[data-morrit]').forEach((el) => {
         ;(el as HTMLElement).style.outline = ''
         ;(el as HTMLElement).style.outlineOffset = ''
       })
@@ -128,8 +128,8 @@ export function VilsonInspector() {
           ...(active ? styles.toggleActive : styles.toggleInactive),
         }}
         onClick={toggle}
-        title="Toggle Vilson (Ctrl+Shift+I)"
-        data-vilson-inspector
+        title="Toggle Morrit (Ctrl+Shift+I)"
+        data-morrit-inspector
       >
         {toggleEmoji}
       </button>
@@ -150,7 +150,7 @@ export function VilsonInspector() {
             boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
             pointerEvents: 'none',
           }}
-          data-vilson-inspector
+          data-morrit-inspector
         >
           Inspector active — click any element
         </div>

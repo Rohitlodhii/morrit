@@ -15,7 +15,7 @@ function shouldExclude(file: string, rootDir: string): boolean {
   )
 }
 
-export function withVilson(nextConfig: NextConfig = {}): NextConfig {
+export function withMorrit(nextConfig: NextConfig = {}): NextConfig {
   return {
     ...nextConfig,
     webpack: (config: any, options: any) => {
@@ -36,7 +36,7 @@ export function withVilson(nextConfig: NextConfig = {}): NextConfig {
               loader: path.resolve(__dirname, '../webpack-plugin/index.js'),
               options: {
                 rootDir,
-                attributeName: 'data-vilson',
+                attributeName: 'data-morrit',
               },
             },
           ],
@@ -45,7 +45,7 @@ export function withVilson(nextConfig: NextConfig = {}): NextConfig {
         const webpack = require('webpack')
         config.plugins.push(
           new webpack.DefinePlugin({
-            __VILSON_ROOT__: JSON.stringify(rootDir),
+            __MORRIT_ROOT__: JSON.stringify(rootDir),
           })
         )
       }

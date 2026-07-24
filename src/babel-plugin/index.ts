@@ -10,13 +10,13 @@ interface BabelPluginOptions {
   filename?: string
 }
 
-export default function vilsonBabelPlugin(
+export default function morritBabelPlugin(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   _api: any,
   options: BabelPluginOptions = {}
 ): PluginObj {
   const {
-    attributeName = 'data-vilson',
+    attributeName = 'data-morrit',
     relativeTo = process.cwd(),
     exclude = ['Fragment', 'React.Fragment'],
     filename: optFilename,
@@ -25,7 +25,7 @@ export default function vilsonBabelPlugin(
   const excludeSet = new Set(exclude)
 
   return {
-    name: 'vilson',
+    name: 'morrit',
     visitor: {
       JSXOpeningElement(p, state) {
         const node = p.node

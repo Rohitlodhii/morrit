@@ -2,8 +2,8 @@ import { createFilter, type FilterPattern } from '@rollup/pluginutils'
 import { parse } from '@babel/parser'
 import { transformFromAstSync } from '@babel/core'
 import path from 'path'
-import vilsonBabelPlugin from '../babel-plugin'
-import type { VilsonOptions } from '../types'
+import morritBabelPlugin from '../babel-plugin'
+import type { MorritOptions } from '../types'
 
 interface VitePlugin {
   name: string
@@ -13,12 +13,12 @@ interface VitePlugin {
   transform?: (code: string, id: string) => { code: string; map?: unknown } | null | undefined
 }
 
-interface VitePluginOptions extends Omit<VilsonOptions, 'exclude'> {
+interface VitePluginOptions extends Omit<MorritOptions, 'exclude'> {
   include?: FilterPattern
   exclude?: FilterPattern
 }
 
-function vilsonVitePlugin(
+function morritVitePlugin(
   options: VitePluginOptions = {}
 ): VitePlugin {
   const {
@@ -32,14 +32,14 @@ function vilsonVitePlugin(
   const filter = createFilter(include, exclude)
 
   return {
-    name: 'vilson',
+    name: 'morrit',
     enforce: 'pre',
     apply: 'serve',
 
     config() {
       return {
         define: {
-          __CARLOS_ROOT__: JSON.stringify(resolvedRootDir),
+          __MORRIT_ROOT__: JSON.stringify(resolvedRootDir),
         },
       }
     },
@@ -60,7 +60,7 @@ function vilsonVitePlugin(
         const result = transformFromAstSync(ast, code, {
           plugins: [
             [
-              vilsonBabelPlugin,
+              morritBabelPlugin,
               {
                 attributeName,
                 relativeTo: resolvedRootDir,
@@ -88,4 +88,4 @@ function vilsonVitePlugin(
   }
 }
 
-export = vilsonVitePlugin
+export = morritVitePlugin

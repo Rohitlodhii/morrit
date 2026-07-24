@@ -7,7 +7,7 @@ interface PopupProps {
   onClose: () => void
 }
 
-declare const __VILSON_ROOT__: string | undefined
+declare const __MORRIT_ROOT__: string | undefined
 
 const POPUP_WIDTH = 300
 const POPUP_HEIGHT = 140
@@ -171,7 +171,7 @@ export function Popup({ info, position, onClose }: PopupProps) {
   }, [info])
 
   const openInEditor = useCallback(() => {
-    const root = typeof __VILSON_ROOT__ === 'string' ? __VILSON_ROOT__ : ''
+    const root = typeof __MORRIT_ROOT__ === 'string' ? __MORRIT_ROOT__ : ''
     const filePath = `${root}/${info.file}`.replace(/\\/g, '/').replace(/\/+/g, '/')
     const url = `vscode://file/${filePath}:${info.line}:${info.column}`
     window.location.href = url
@@ -207,7 +207,7 @@ export function Popup({ info, position, onClose }: PopupProps) {
       <div
         style={{ ...styles.popup, left: coords.x, top: coords.y }}
         onClick={(e) => e.stopPropagation()}
-        data-vilson-inspector
+        data-morrit-inspector
       >
         <div style={styles.header}>
           <span style={styles.filePath}>{info.file}:{info.line}</span>

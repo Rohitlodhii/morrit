@@ -1,4 +1,4 @@
-export interface VilsonOptions {
+export interface MorritOptions {
   attributeName?: string
   rootDir?: string
   pathType?: 'relative' | 'absolute'

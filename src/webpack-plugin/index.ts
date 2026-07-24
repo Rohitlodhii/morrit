@@ -1,7 +1,7 @@
 import { parse } from '@babel/parser'
 import { transformFromAstSync } from '@babel/core'
-import vilsonBabelPlugin from '../babel-plugin'
-import type { VilsonOptions } from '../types'
+import morritBabelPlugin from '../babel-plugin'
+import type { MorritOptions } from '../types'
 import type { Compiler, WebpackPluginInstance } from 'webpack'
 import path from 'path'
 
@@ -15,11 +15,11 @@ function shouldExclude(file: string, rootDir: string): boolean {
   )
 }
 
-function vilsonLoader(this: any, source: string): void {
+function morritLoader(this: any, source: string): void {
   const callback = this.async()
   if (!callback) return
 
-  const options = (typeof this.getOptions === 'function' ? this.getOptions() : {}) as VilsonOptions
+  const options = (typeof this.getOptions === 'function' ? this.getOptions() : {}) as MorritOptions
   const resourcePath = this.resourcePath
   const isDev = this.mode === 'development'
   const rootDir = options.rootDir || process.cwd()
@@ -45,7 +45,7 @@ function vilsonLoader(this: any, source: string): void {
     const result = transformFromAstSync(ast, source, {
       plugins: [
         [
-          vilsonBabelPlugin,
+          morritBabelPlugin,
           {
             attributeName: options.attributeName,
             exclude: options.exclude,
@@ -74,13 +74,13 @@ function vilsonLoader(this: any, source: string): void {
 
 const webpack = require('webpack')
 
-export class VilsonWebpackPlugin implements WebpackPluginInstance {
-  constructor(private options: VilsonOptions = {}) {}
+export class MorritWebpackPlugin implements WebpackPluginInstance {
+  constructor(private options: MorritOptions = {}) {}
 
   apply(compiler: Compiler): void {
     const rootDir = this.options.rootDir || process.cwd()
 
-    compiler.hooks.afterEnvironment.tap('VilsonWebpackPlugin', () => {
+    compiler.hooks.afterEnvironment.tap('MorritWebpackPlugin', () => {
       const rule = {
         test: /\.(jsx?|tsx)$/,
         enforce: 'pre' as const,
@@ -99,19 +99,19 @@ export class VilsonWebpackPlugin implements WebpackPluginInstance {
       }
     })
 
-    compiler.hooks.afterPlugins.tap('VilsonWebpackPlugin', () => {
+    compiler.hooks.afterPlugins.tap('MorritWebpackPlugin', () => {
       new webpack.DefinePlugin({
-        __CARLOS_ROOT__: JSON.stringify(rootDir),
+        __MORRIT_ROOT__: JSON.stringify(rootDir),
       }).apply(compiler)
     })
   }
 }
 
-export default vilsonLoader
+export default morritLoader
 
 if (typeof module !== 'undefined') {
-  module.exports = Object.assign(vilsonLoader, {
-    default: vilsonLoader,
-    VilsonWebpackPlugin,
+  module.exports = Object.assign(morritLoader, {
+    default: morritLoader,
+    MorritWebpackPlugin,
   })
 }

@@ -1,2 +1,2 @@
-export { VilsonInspector } from './runtime'
+export { MorritInspector } from './runtime'
 export type { SourceInfo } from './runtime'
