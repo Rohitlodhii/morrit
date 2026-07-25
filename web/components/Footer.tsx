@@ -115,9 +115,9 @@ export default function Footer() {
         {/* Footer Social Buttons (Keycaps) */}
         <div className="flex items-center justify-center gap-1 mb-8">
           {[
-            { src: "/dc.png", alt: "Discord", href: "https://discord.gg" },
-            { src: "/linkedin.png", alt: "LinkedIn", href: "https://linkedin.com" },
-            { src: "/git.png", alt: "GitHub", href: "https://github.com/Rohitlodhii/Wilson_React-inspector-tool" }
+            { src: "/dc.png", alt: "Discord", href: "https://discord.com/users/userid/1125125295880556644" },
+            { src: "/linkedin.png", alt: "LinkedIn", href: "https://www.linkedin.com/in/rohitlodhiii/" },
+            { src: "/git.png", alt: "GitHub", href: "https://github.com/Rohitlodhii/morrit" }
           ].map((social, i) => {
             const handleClick = () => {
               const audio = new Audio("/keysound.mp3");
@@ -166,7 +166,7 @@ export default function Footer() {
           className="text-stone-400 text-xs font-semibold"
           style={{ fontFamily: "var(--font-geist-sans), sans-serif" }}
         >
-          made for frontend devs by rohitlodhii
+          made for frontend devs by <a alt="rohit's website" href="https://rohitlodhi.in">rohitlodhii</a>
         </p>
       </div>
     </footer>
