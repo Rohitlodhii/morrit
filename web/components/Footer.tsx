@@ -166,7 +166,7 @@ export default function Footer() {
           className="text-stone-400 text-xs font-semibold"
           style={{ fontFamily: "var(--font-geist-sans), sans-serif" }}
         >
-          made for frontend devs by <a alt="rohit's website" href="https://rohitlodhi.in">rohitlodhii</a>
+          made for frontend devs by <a  href="https://rohitlodhi.in">rohitlodhii</a>
         </p>
       </div>
     </footer>
