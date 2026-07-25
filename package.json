@@ -1,6 +1,6 @@
 {
   "name": "morrit",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Compile-time React source inspector for Vite and Next.js",
   "type": "commonjs",
   "main": "dist/runtime/index.js",
