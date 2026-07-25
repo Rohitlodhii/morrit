@@ -213,7 +213,7 @@ justify-center
                 className="relative z-10 p-0 border-0 bg-transparent cursor-pointer focus:outline-none select-none w-full sm:w-auto flex justify-center"
               >
                 <img
-                  src="/press.png"
+                  src="/Press.png"
                   alt="Copy Prompt"
                   className="h-14 w-auto object-contain pointer-events-none"
                   draggable={false}
